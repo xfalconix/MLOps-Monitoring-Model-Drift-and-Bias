@@ -20,3 +20,6 @@ env/
 # Datos sensibles o pesados (opcional, pero recomendado)
 *.env
 .env
+
+# Claude
+.claude/
