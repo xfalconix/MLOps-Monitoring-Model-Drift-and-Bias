@@ -1,63 +1,75 @@
-# MLOps: Monitoring Model Drift and Bias
+# MLOps: Model Drift & Bias Monitoring
 
-This repository contains my personal rework of the notebooks from the LinkedIn Learning course **[MLOps Essentials: Monitoring Model Drift and Bias](https://www.linkedin.com/learning/mlops-essentials-monitoring-model-drift-and-bias)** (2023), instructed by **Kumaran Ponnambalam**.
+![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat-square&logo=python&logoColor=white)
+![pandas](https://img.shields.io/badge/pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
+![alibi-detect](https://img.shields.io/badge/alibi--detect-1A73E8?style=flat-square)
+![sklego](https://img.shields.io/badge/sklego-E8A000?style=flat-square)
+![Jupyter](https://img.shields.io/badge/Jupyter-F37626?style=flat-square&logo=jupyter&logoColor=white)
+![LinkedIn](https://img.shields.io/badge/LinkedIn%20Learning-0A66C2?style=flat-square&logo=linkedin&logoColor=white)
 
-The original notebooks are part of the course material. I have rebuilt them from scratch, adjusting the visual style and significantly extending the inline comments to reinforce my own understanding. All comments are written in **Spanish**.
+Repositorio con el rework personal de los notebooks del curso de LinkedIn Learning **[MLOps Essentials: Monitoring Model Drift and Bias](https://www.linkedin.com/learning/mlops-essentials-monitoring-model-drift-and-bias)** (2023) de **Kumaran Ponnambalam**.
 
-**Course certificate:** [View on LinkedIn](https://www.linkedin.com/learning/certificates/a258462ee55bbd8fc518baf4c6d94597609537448bb3472bf29f4c17d01d72cf?trk=share_certificate)
+He reconstruido los notebooks desde cero, ajustando el estilo visual y añadiendo comentarios extensos en **espanol** para reforzar la comprension propia.
 
-`#mlops` `#artificialintelligence`
-
----
-
-## About the course
-
-> As more and more ML models are developed and deployed, the need arises to ensure that they are effective, safe, and performing as desired. Model monitoring, a core function of MLOps, helps data scientists and MLOps engineers meet this need. Kumaran Ponnambalam covers the types of monitoring needed for ML models, goes deep into drift monitoring and bias, explains different detection techniques, and demonstrates how to execute them in Python using open-source libraries.
-
-**Instructor:** Kumaran Ponnambalam — data professional with 20+ years of experience.
+**Certificado del curso:** [Ver en LinkedIn](https://www.linkedin.com/learning/certificates/a258462ee55bbd8fc518baf4c6d94597609537448bb3472bf29f4c17d01d72cf?trk=share_certificate)
 
 ---
 
-## Notebooks in this repository
+## Sobre el curso
 
-| File | Topic |
-|------|-------|
-| `code_03_XX Drift Detection Example.ipynb` | Feature drift and concept drift detection using statistical tests |
-| `code_06_03 Equal Opportunity Score with sklego.ipynb` | Bias measurement: Equal Opportunity Score with the `sklego` library |
+> A medida que mas modelos de ML se desarrollan y despliegan, surge la necesidad de garantizar que sean efectivos, seguros y que funcionen segun lo esperado. El monitoreo de modelos, una funcion nucleo de MLOps, ayuda a los cientificos de datos e ingenieros MLOps a cumplir este objetivo. Kumaran Ponnambalam cubre los tipos de monitoreo necesarios, profundiza en drift y bias, explica diferentes tecnicas de deteccion, y las demuestra en Python con librerias de codigo abierto.
 
-Both notebooks use a credit-approval dataset (`credit-approval-training-data.csv`, `credit-approval-prod-data.csv`, `credit-approval-fair-data.csv`) to illustrate real-world drift and bias scenarios.
+**Instructor:** Kumaran Ponnambalam — profesional de datos con mas de 20 anos de experiencia.
 
 ---
 
-## Real-world reflection: drift and bias in a CNN for biofouling recognition
+## Notebooks del repositorio
 
-The concepts covered in this course are not abstract. Here is a case that illustrates all of them — one I find particularly compelling given my professional background in maritime services.
+| Archivo | Tema |
+|---------|------|
+| `code_03_XX Drift Detection Example.ipynb` | Deteccion de feature drift y concept drift con tests estadisticos usando **alibi-detect** |
+| `code_06_03 Equal Opportunity Score with sklego.ipynb` | Medicion de sesgo: Equal Opportunity Score con la libreria **sklego** |
 
-### Use case: automated biofouling recognition on vessel hulls
+Ambos notebooks usan un dataset de aprobacion de creditos (`credit-approval-training-data.csv`, `credit-approval-prod-data.csv`, `credit-approval-fair-data.csv`) para ilustrar escenarios reales de drift y sesgo.
 
-This case study taught me that the difference between a data scientist and an engineer with operational experience is exactly what determines whether the model survives in production. After 10+ years in maritime operations and a Master's in Big Data & AI, I see it from both sides.
+---
 
-Case: CNN for automated biofouling recognition on vessel hulls.
+## Stack tecnologico
 
-Biofouling matters through two lenses: operational (hydrodynamic drag, fuel consumption, emissions under CII/EEXI) and regulatory/biosecurity (non-indigenous species, governed by standards like New Zealand's clean hull standard). The case below sits on the regulatory side, but the concepts apply to both — and it's the perfect lens to tell apart the two types of drift, plus bias.
+| Libreria | Uso en el repo |
+|-----------|---------------|
+| `pandas` | Manipulacion y analisis de datos |
+| `numpy` | Operaciones numericas |
+| `matplotlib` | Visualizacion de resultados |
+| `scikit-learn` | Modelo base (GaussianNB), train_test_split, metricas |
+| `alibi-detect` | ChiSquareDrift para deteccion de feature drift |
+| `sklego` | equal_opportunity_score para medicion de sesgo |
 
-A landmark study is Mannix et al. (2021, Nature Scientific Reports), which trained a CNN on 10,000+ expert-annotated images, reaching agreement on par with human expert reviewers.
+---
 
-Where it gets interesting:
+## Reflexion practica: drift y bias en reconocimiento de biofouling en cascos de buques
 
-🔹 Feature drift: the paper's images come from three organisations (DAWE-Australia, MPI-New Zealand, CSLC-California), mostly international vessels arriving at those ports. Deploy that model in the Strait of Gibraltar — where I spent years coordinating hull inspection and cleaning for shipping lines like MAERSK, CMA CGM and SVITZER — and the inputs shift: different Mediterranean biota, niche areas (sea chests, propellers, sea boxes), different turbidity and lighting. Pixel distributions move, even if the rule "more coverage = higher fouling" still holds. The authors themselves acknowledge local fine-tuning would improve performance.
+Los conceptos del curso no son abstractos. Este caso los ilustra todos desde mi experiencia profesional en servicios maritimos.
 
-🔹 Concept drift: ground truth isn't a physical law, it's human labels — and experts only agree 89% of the time. If regulators tighten the clean hull standard tomorrow (New Zealand and Australia are heading there), the same image goes from acceptable to non-compliant without anything in it changing. Pure concept drift driven by governance.
+### Caso: CNN para reconocimiento automatico de biofouling en cascos de buques
 
-And then there's bias, which deserves the same scrutiny:
+El biofouling importa desde dos perspectivas: operacional (resistencia hidroinamica, consumo de combustible, emisiones bajo CII/EEXI) y regulatoria/bioseguridad (especies no indigena, gobernada por estandares como el clean hull standard de Nueva Zelanda).
 
-🔹 Training data bias: heavily imbalanced — most images are clean hulls (SLoF 0), only ~10% severe fouling (SLoF 2). The model can learn to "play it safe" and fail on the cases most critical for biosecurity.
+Un estudio clave es Mannix et al. (2021, Nature Scientific Reports), que entreno una CNN con 10.000+ imagenes anotadas por expertos, alcanzando un acuerdo comparable al de revisores humanos expertos.
 
-🔹 Label bias: human experts only agree 89% of the time. One annotator's judgement becomes the model's "truth".
+Donde se pone interesante:
 
-🔹 Operational representation bias: transoceanic vessels at strict-biosecurity ports are overrepresented; fishing fleets and coastal traffic, underrepresented. Performance degrades precisely where data is scarcest. The decision isn't technical — it's ethical and regulatory.
+- **Feature drift:** las imagenes del estudio provienen de tres organizaciones (DAWE-Australia, MPI-Nueva Zelanda, CSLC-California), mayormente buques internacionales. Desplegar ese modelo en el Estrecho de Gibraltar — donde passe anos coordinando inspecciones y limpiezas de cascos para navieras como MAERSK, CMA CGM y SVITZER — y las entradas cambian: biota mediterranea diferente, areas nicho (sea chests, helices, sea boxes), turbidez y luz distintas. Las distribuciones de pixeles se mueven.
 
-Applying ML to maritime services isn't just about model accuracy. It's about understanding where the model came from, where you're deploying it, and what shifts in the world will eventually break it.
+- **Concept drift:** la verdad fundamental no es una ley fisica, son etiquetas humanas — y los expertos solo coinciden el 89% del tiempo. Si los reguladores endurecen el estandar manana, la misma imagen pasa de aceptable a no conforme sin que nada en ella cambie. Drift conceptual puro impulsado por gobernanza.
 
+- **Sesgo de entrenamiento:** altamente desbalanceado — la mayoria de las imagenes son cascos limpios (SLoF 0), solo ~10% fouling severo (SLoF 2). El modelo puede aprender a "jugar seguro" y fallar en los casos mas criticos para bioseguridad.
+
+- **Sesgo de etiquetas:** los expertos solo coinciden el 89% del tiempo. El juicio de un annotador se convierte en la "verdad" del modelo.
+
+- **Sesgo de representacion operacional:** buques transoceanicos en puertos de bioseguridad estricta estan sobre-representados; flotas pesqueras y trafco costero, subrepresentados. El rendimiento se degrada precisamente donde los datos son mas escasos.
+
+Aplicar ML a servicios maritimos no es solo sobre precision del modelo. Es sobre entender de donde vino el modelo, donde lo despliegas, y que cambios en el mundo eventualmente lo romperan.
 
 > Mannix, E.J. et al. (2021). Automating the assessment of biofouling in images using expert agreement as a gold standard. *Scientific Reports* 11, 2739. https://doi.org/10.1038/s41598-021-82024-x
